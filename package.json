@@ -1,0 +1,29 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf web/assets/*",
+    "build:css": "mkdirp web/assets/css && sass --style compressed src/scss:web/assets/css",
+    "build:js": "mkdirp web/assets/js && uglifyjs src/js/*.js --mangle --compress --source-map --output web/assets/js/bundle.js",
+    "build:img": "mkdirp web/assets/img && imagemin src/img/**/* --out-dir=web/assets/img",
+    "watch:css": "onchange src/scss -- npm run build:css",
+    "watch:js": "onchange src/js -- npm run build:js",
+    "watch:img": "onchange src/img -- npm run build:img",
+    "serve": "browser-sync start --server web --files web/**/*.*",
+    "watch": "npm run build && run-p serve watch:*",
+    "build": "run-s clean build:*"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.27.7",
+    "imagemin-cli": "^7.0.0",
+    "mkdirp": "^1.0.4",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "sass": "^1.49.7",
+    "uglify-js": "^3.15.1"
+  }
+}
